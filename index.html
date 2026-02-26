@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport de Stage - Basket-ball</title>
+    <style>
+        /* Importation de polices professionnelles et académiques */
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&display=swap');
+
+        :root {
+            /* Palette de couleurs professionnelle (Bleu marine académique) */
+            --primary-color: #1A365D; /* Navy blue profond */
+            --secondary-color: #2B6CB0; /* Bleu plus clair */
+            --accent-color: #C05621; /* Cuivre / Orange très discret pour le rappel basket */
+            --text-dark: #1E293B;
+            --text-body: #334155;
+            --bg-light: #F8FAFC;
+            --border-color: #CBD5E1;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Lora', serif; /* Police Serif classique pour le corps du texte */
+            color: var(--text-body);
+            background-color: #E2E8F0;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            font-size: 11pt;
+        }
+
+        /* Bouton d'impression flottant */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 11pt;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .print-button:hover {
+            background-color: #A04010;
+        }
+
+        /* Format page A4 pour impression */
+        .page {
+            background-color: var(--white);
+            width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            padding: 25mm 25mm 25mm 25mm;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        /* En-tête de page discret (sauf pour la couverture) */
+        .page:not(.cover-page)::before {
+            content: 'ENS Tétouan | Rapport de Stage EPS';
+            position: absolute;
+            top: 10mm;
+            left: 25mm;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 8pt;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .page:not(.cover-page)::after {
+            content: 'Année Universitaire 2025-2026';
+            position: absolute;
+            top: 10mm;
+            right: 25mm;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 8pt;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-color);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-bottom: 1.5em;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        /* --- STYLES DE LA PAGE DE COUVERTURE --- */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cover-header {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10pt;
+            text-transform: uppercase;
+            line-height: 1.4;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+        }
+
+        .cover-university {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 14pt;
+            color: var(--primary-color);
+            margin-bottom: 60px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cover-title-box {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px 0;
+            border-top: 3px solid var(--primary-color);
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .cover-title-box h1 {
+            font-size: 28pt;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cover-title-box h2 {
+            font-size: 16pt;
+            color: var(--secondary-color);
+            margin: 0;
+            font-weight: 400;
+            font-family: 'Lora', serif;
+            font-style: italic;
+        }
+
+        .cover-title-box h3 {
+            font-size: 14pt;
+            color: var(--accent-color);
+            margin: 15px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cover-info {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .cover-info table {
+            width: 80%;
+            border-collapse: collapse;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11pt;
+        }
+
+        .cover-info td {
+            padding: 8px 15px;
+            vertical-align: top;
+        }
+
+        .cover-info td:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: right;
+            width: 45%;
+            border-right: 2px solid var(--accent-color);
+        }
+
+        .cover-info td:last-child {
+            text-align: left;
+            width: 55%;
+            color: var(--text-dark);
+        }
+
+        .cover-footer {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 12pt;
+            color: var(--primary-color);
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* --- STYLES DES SECTIONS --- */
+        .section-title {
+            font-size: 20pt;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-number {
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-right: 15px;
+            font-size: 24pt;
+        }
+
+        /* --- SOMMAIRE --- */
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11pt;
+            color: var(--text-dark);
+        }
+        
+        .toc-item .toc-title {
+            font-weight: 600;
+        }
+        
+        .toc-item .toc-subtitle {
+            margin-left: 20px;
+            font-weight: 400;
+            font-size: 10pt;
+            color: var(--text-body);
+        }
+
+        .toc-item .toc-page {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .toc-dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted var(--border-color);
+            margin: 0 10px;
+            position: relative;
+            top: -5px;
+        }
+
+        /* --- ENCADRÉS ET CONTENU SPÉCIFIQUE --- */
+        .content-box {
+            background-color: var(--bg-light);
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+
+        .content-box h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 12pt;
+        }
+
+        .session-block {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 25px;
+            background-color: #FFFFFF;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .session-block h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 13pt;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .session-block h3 span {
+            font-size: 10pt;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .session-block p {
+            margin-bottom: 0.8em;
+            font-size: 10.5pt;
+        }
+        
+        .session-block ul {
+            font-size: 10.5pt;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .problem-section {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 25px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .problem-section h3 {
+            color: var(--white);
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+
+        .problem-section p {
+            color: #E2E8F0;
+        }
+        
+        .quote-block {
+            font-style: italic;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            color: var(--secondary-color);
+        }
+
+        /* --- PARAMÈTRES STRICTS POUR L'IMPRESSION PDF --- */
+        @media print {
+            /* On cache le bouton d'impression */
+            .print-button {
+                display: none !important;
+            }
+            
+            /* On force le navigateur à afficher tout le contenu (annule la coupure iframe) */
+            body, html {
+                background-color: white !important;
+                height: auto !important;
+                overflow: visible !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            .page {
+                margin: 0 !important;
+                padding: 20mm 20mm !important;
+                box-shadow: none !important;
+                border: none !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                min-height: auto !important; /* Laisse le contenu définir la hauteur */
+                width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOUTON D'IMPRESSION -->
+    <button class="print-button" onclick="openPrintableVersion()">🖨️ Sauvegarder en PDF</button>
+
+    <!-- PAGE 1 : COUVERTURE -->
+    <div class="page cover-page">
+        <div>
+            <div class="cover-header">
+                Royaume du Maroc<br>
+                Ministère de l'Éducation Nationale,<br>
+                du Préscolaire et des Sports
+            </div>
+
+            <div class="cover-university">
+                UNIVERSITÉ ABDELMALEK ESSAÂDI<br>
+                ÉCOLE NORMALE SUPÉRIEURE - TÉTOUAN<br>
+                <span style="font-size: 11pt; font-weight: 400; color: var(--text-dark);">المدرسة العليا للأساتذة</span>
+            </div>
+        </div>
+
+        <div class="cover-title-box">
+            <h1>Rapport de Stage</h1>
+            <h2>Immersion en milieu professionnel</h2>
+            <h3>Cycle de Basket-ball</h3>
+        </div>
+
+        <div class="cover-info">
+            <table>
+                <tr>
+                    <td>Établissement d'accueil</td>
+                    <td>Lycée collégial Anoual</td>
+                </tr>
+                <tr>
+                    <td>Direction provinciale</td>
+                    <td>Tétouan</td>
+                </tr>
+                <tr>
+                    <td>Académie</td>
+                    <td>Tanger-Tétouan-Al Hoceima</td>
+                </tr>
+                <tr>
+                    <td>Directeur de l'établissement</td>
+                    <td>M. Mohamed Fahim</td>
+                </tr>
+                <tr>
+                    <td>Superviseur pédagogique (ENS)</td>
+                    <td>Pr. Soulaiman HARFOUF</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="cover-footer">
+            Année universitaire : 2025 - 2026
+        </div>
+    </div>
+
+    <!-- PAGE 2 : SOMMAIRE (Partie 1) -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">I</span> Sommaire</h2>
+        
+        <div style="margin-top: 30px;">
+            <div class="toc-item">
+                <span class="toc-title">01. Remerciements</span><span class="toc-dots"></span><span class="toc-page">p. 04</span>
+            </div>
+            
+            <div class="toc-item" style="margin-top: 15px;">
+                <span class="toc-title">02. Introduction Générale</span><span class="toc-dots"></span><span class="toc-page">p. 05</span>
+            </div>
+            <div class="toc-item toc-subtitle">2.1. Le cadre institutionnel de l'EPS au Maroc<span class="toc-dots"></span><span class="toc-page">p. 05</span></div>
+            <div class="toc-item toc-subtitle">2.2. Les objectifs personnels et professionnels du stage<span class="toc-dots"></span><span class="toc-page">p. 06</span></div>
+            
+            <div class="toc-item" style="margin-top: 15px;">
+                <span class="toc-title">03. Présentation de l'établissement d'accueil</span><span class="toc-dots"></span><span class="toc-page">p. 07</span>
+            </div>
+            <div class="toc-item toc-subtitle">3.1. Historique et situation géographique<span class="toc-dots"></span><span class="toc-page">p. 07</span></div>
+            <div class="toc-item toc-subtitle">3.2. Contexte socio-éducatif des élèves<span class="toc-dots"></span><span class="toc-page">p. 08</span></div>
+            
+            <div class="toc-item" style="margin-top: 15px;">
+                <span class="toc-title">04. Organisation Administrative et Pédagogique</span><span class="toc-dots"></span><span class="toc-page">p. 09</span>
+            </div>
+            <div class="toc-item toc-subtitle">4.1. L'équipe de direction et la vie scolaire<span class="toc-dots"></span><span class="toc-page">p. 09</span></div>
+            <div class="toc-item toc-subtitle">4.2. Le département d'Éducation Physique et Sportive<span class="toc-dots"></span><span class="toc-page">p. 10</span></div>
+            
+            <div class="toc-item" style="margin-top: 15px;">
+                <span class="toc-title">05. Les Installations Sportives</span><span class="toc-dots"></span><span class="toc-page">p. 11</span>
+            </div>
+            <div class="toc-item toc-subtitle">5.1. Infrastructures spécifiques au Basket-ball<span class="toc-dots"></span><span class="toc-page">p. 11</span></div>
+            <div class="toc-item toc-subtitle">5.2. Gestion du matériel et normes de sécurité<span class="toc-dots"></span><span class="toc-page">p. 12</span></div>
+            
+            <div class="toc-item" style="margin-top: 15px;">
+                <span class="toc-title">06. Mon stage éducatif : Fonctionnement administratif</span><span class="toc-dots"></span><span class="toc-page">p. 13</span>
+            </div>
+            <div class="toc-item toc-subtitle">6.1. La surveillance des examens et le cadre réglementaire<span class="toc-dots"></span><span class="toc-page">p. 13</span></div>
+            <div class="toc-item toc-subtitle">6.2. Gestion de l'assiduité et relation avec les familles<span class="toc-dots"></span><span class="toc-page">p. 14</span></div>
+        </div>
+    </div>
+
+    <!-- PAGE 3 : SOMMAIRE (Partie 2) -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number"></span> Sommaire (Suite)</h2>
+        
+        <div style="margin-top: 30px;">
+            <div class="toc-item">
+                <span class="toc-title">07. Mon stage éducatif : L'expérience pratique (Cycle Basket-ball)</span><span class="toc-dots"></span><span class="toc-page">p. 15</span>
+            </div>
+            <div class="toc-item toc-subtitle">7.1. Le cadre didactique de l'APSA Basket-ball<span class="toc-dots"></span><span class="toc-page">p. 15</span></div>
+            <div class="toc-item toc-subtitle">7.2. Séance 1 : L'évaluation diagnostique<span class="toc-dots"></span><span class="toc-page">p. 16</span></div>
+            <div class="toc-item toc-subtitle">7.3. Séance 2 : Le Dribble et la protection de balle<span class="toc-dots"></span><span class="toc-page">p. 17</span></div>
+            <div class="toc-item toc-subtitle">7.4. Séance 3 : La Passe, la réception et le démarquage<span class="toc-dots"></span><span class="toc-page">p. 18</span></div>
+            <div class="toc-item toc-subtitle">7.5. Séance 4 : Le Tir en course (Double pas)<span class="toc-dots"></span><span class="toc-page">p. 19</span></div>
+            <div class="toc-item toc-subtitle">7.6. Séance 5 : Le Tir en appui et ses fondamentaux<span class="toc-dots"></span><span class="toc-page">p. 20</span></div>
+            <div class="toc-item toc-subtitle">7.7. Séance 6 : Initiation tactique et défense de zone<span class="toc-dots"></span><span class="toc-page">p. 21</span></div>
+            <div class="toc-item toc-subtitle">7.8. Séance 7 : L'évaluation sommative<span class="toc-dots"></span><span class="toc-page">p. 22</span></div>
+            
+            <div class="toc-item" style="margin-top: 15px;">
+                <span class="toc-title">08. Méthodologie et Analyse des Résultats</span><span class="toc-dots"></span><span class="toc-page">p. 23</span>
+            </div>
+            <div class="toc-item toc-subtitle">8.1. Méthodes d'observation et de recueil de données<span class="toc-dots"></span><span class="toc-page">p. 23</span></div>
+            <div class="toc-item toc-subtitle">8.2. Évolution motrice et sociale des élèves<span class="toc-dots"></span><span class="toc-page">p. 24</span></div>
+            
+            <div class="toc-item" style="margin-top: 15px;">
+                <span class="toc-title">09. Problématique Professionnelle et Solutions Didactiques</span><span class="toc-dots"></span><span class="toc-page">p. 25</span>
+            </div>
+            <div class="toc-item toc-subtitle">9.1. L'hétérogénéité et l'appréhension du contact<span class="toc-dots"></span><span class="toc-page">p. 25</span></div>
+            <div class="toc-item toc-subtitle">9.2. L'impact du genre et des stéréotypes dans les sports collectifs<span class="toc-dots"></span><span class="toc-page">p. 26</span></div>
+            <div class="toc-item toc-subtitle">9.3. Solutions pédagogiques : Variables et différenciation<span class="toc-dots"></span><span class="toc-page">p. 27</span></div>
+
+            <div class="toc-item" style="margin-top: 15px;">
+                <span class="toc-title">10. Conclusion Générale</span><span class="toc-dots"></span><span class="toc-page">p. 28</span>
+            </div>
+
+            <div class="toc-item" style="margin-top: 15px;">
+                <span class="toc-title">11. Bibliographie & Webographie</span><span class="toc-dots"></span><span class="toc-page">p. 29</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 4 : REMERCIEMENTS -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">01</span> Remerciements</h2>
+        
+        <p>En préambule à ce rapport, aboutissement de plusieurs semaines d'immersion au cœur du système éducatif marocain, je tiens à exprimer ma profonde reconnaissance envers toutes les personnes qui ont contribué, de près ou de loin, à la réussite de ce stage professionnel.</p>
+
+        <p>Mes premiers remerciements s'adressent naturellement à <strong>Monsieur HARFOUF Soulaiman</strong>, mon superviseur pédagogique à l'École Normale Supérieure. Je le remercie chaleureusement pour m'avoir ouvert les portes du monde professionnel et m'avoir ainsi permis d'acquérir une expérience concrète et formatrice. J'ai particulièrement apprécié sa capacité à me guider avec rigueur, son exigence intellectuelle, tout en me laissant une grande autonomie. Cette confiance accordée a été déterminante dans la construction de mon identité d'enseignant et le développement de mes compétences didactiques.</p>
+
+        <p>J'adresse également mes remerciements les plus sincères à <strong>Monsieur Mohamed Bouzid</strong> pour m'avoir accueilli au sein de son établissement et pour m'avoir donné l'opportunité de réaliser ce stage dans un environnement propice à l'apprentissage et à l'innovation pédagogique. La qualité de l'encadrement, la structuration des espaces et l'engagement constant de l'équipe enseignante ont été pour moi une véritable source d'inspiration au quotidien.</p>
+
+        <p>Je suis particulièrement reconnaissant(e) envers le Directeur du Lycée Collégial Anoual, <strong>Monsieur Mohamed Fahim</strong>, pour le temps précieux qu'il a bien voulu m'accorder malgré ses nombreuses responsabilités. Sa bienveillance pour m'intégrer à la vie de l'établissement, ainsi que ses conseils avisés concernant la gestion administrative, m'ont permis de saisir plus finement les enjeux globaux du métier d'enseignant, qui dépasse largement le simple cadre de la classe.</p>
+
+        <p>Je souhaite également adresser ma gratitude au personnel administratif, et tout particulièrement à <strong>Madame Houssnia</strong>, surveillante générale, qui a grandement facilité mes démarches administratives. Son sourire quotidien et son suivi bienveillant de mon intégration tout au long de ce stage ont rendu cette expérience humaine très enrichissante.</p>
+
+        <p>Enfin, un immense et incommensurable merci à ma famille, et plus particulièrement à mes parents, pour leur amour, leur patience et leur soutien inconditionnel. Leurs encouragements constants, tant moraux que matériels, ont constitué le socle invisible mais indispensable de ma motivation pour mener à bien ce stage et poursuivre sereinement l'ensemble de mon parcours universitaire.</p>
+    </div>
+
+    <!-- PAGE 5 : INTRODUCTION 1 -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">02</span> Introduction Générale</h2>
+        
+        <p>La formation initiale des enseignants d'Éducation Physique et Sportive (EPS) au sein de l'École Normale Supérieure ne saurait se concevoir sans une confrontation directe, prolongée et analytique avec la réalité du terrain scolaire. C'est dans cette optique que s'inscrit le présent rapport de stage, fruit d'une immersion professionnelle réalisée au sein du Lycée Collégial Anoual de Tétouan lors de l'année universitaire 2025-2026. Ce document retrace mon parcours d'intégration, d'observation, puis de prise en responsabilité de classes sur un cycle d'apprentissage spécifique : le Basket-ball.</p>
+
+        <h3>2.1. Le cadre institutionnel de l'EPS au Maroc</h3>
+        
+        <p>L'Éducation Physique et Sportive occupe une place singulière et fondamentale dans le système éducatif marocain. Loin de se limiter à un simple "défoulement" physique, elle est définie par les Orientations Pédagogiques Générales (OPG) du Ministère de l'Éducation Nationale comme une discipline d'enseignement à part entière. Elle participe de manière active et irremplaçable à la formation globale de l'élève (dimensions motrice, cognitive, socio-affective).</p>
+
+        <div class="content-box">
+            <h4>L'enjeu psychomoteur et social</h4>
+            <p>Au niveau collégial, les élèves traversent la phase délicate de la puberté et de l'adolescence. Leurs corps changent, leurs repères spatio-temporels se modifient, et leur rapport aux autres se complexifie. L'EPS, à travers les Activités Physiques Sportives et Artistiques (APSA) comme le basket-ball, offre un laboratoire social unique. Elle permet aux adolescents de construire une nouvelle motricité, d'apprendre à coopérer, à s'opposer dans le respect de règles communes, et à gérer leurs émotions face à la victoire ou l'échec.</p>
+        </div>
+
+        <p>Le choix du basket-ball pour mon intervention pédagogique n'est pas fortuit. Ce sport collectif de démarquage exige une lecture de jeu rapide, une coordination fine et un esprit d'équipe prononcé, répondant ainsi parfaitement aux compétences ciblées par le curriculum national pour les classes du collège.</p>
+    </div>
+
+    <!-- PAGE 6 : INTRODUCTION 2 -->
+    <div class="page">
+        <h3>2.2. Les objectifs personnels et professionnels du stage</h3>
+        
+        <p>Ce stage d'immersion s'inscrit dans une double logique : une logique d'application des savoirs savants acquis à l'université, et une logique de construction de savoirs d'action, issus de la pratique professionnelle.</p>
+        
+        <div class="content-box">
+            <h4>Objectif 1 : La transposition didactique en acte</h4>
+            <p>L'un de mes défis majeurs fut de comprendre comment transformer un "savoir savant" (les techniques expertes du basket-ball universitaire) en un "savoir enseigné" adapté à des collégiens. Il s'agissait d'observer comment les enseignants titulaires déconstruisent l'APSA pour la rendre accessible à des élèves dont l'expérience motrice est très hétérogène. J'ai cherché à analyser les situations d'apprentissage mises en place : sont-elles ludiques ? Sont-elles porteuses de sens pour l'élève ? Permettent-elles un temps d'engagement moteur suffisant ?</p>
+        </div>
+
+        <div class="content-box">
+            <h4>Objectif 2 : La gestion de la classe et la posture de l'enseignant</h4>
+            <p>Au-delà du contenu didactique, la réussite d'une séance d'EPS repose sur l'autorité bienveillante et la posture de l'enseignant. J'avais pour objectif d'apprendre à me positionner dans l'espace (pour voir et être vu de tous), à formuler des consignes claires, concises et audibles, particulièrement dans un environnement extérieur souvent bruyant. L'enjeu était également d'apprendre à gérer les conflits inhérents aux sports de compétition, et de savoir maintenir la motivation d'élèves en situation d'échec moteur.</p>
+        </div>
+
+        <div class="content-box">
+            <h4>Objectif 3 : L'immersion dans la communauté éducative</h4>
+            <p>Enfin, un enseignant d'EPS n'est pas un îlot isolé sur son terrain de sport. Il appartient à une communauté éducative. Ce stage visait à me familiariser avec les rouages administratifs d'un collège, la relation avec les surveillants généraux, le rôle du conseil de classe, et l'importance de la communication avec l'équipe de direction. Comprendre ce fonctionnement global est essentiel pour s'intégrer durablement dans la profession.</p>
+        </div>
+        
+        <p>Ce rapport détaillera dans un premier temps la structure et l'organisation du Lycée Collégial Anoual, avant de plonger dans l'analyse critique et réflexive de mes interventions pédagogiques autour du cycle de basket-ball.</p>
+    </div>
+
+    <!-- PAGE 7 : PRESENTATION ETABLISSEMENT 1 -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">03</span> Présentation de l'établissement d'accueil</h2>
+        
+        <p>Pour comprendre les dynamiques pédagogiques à l'œuvre dans une classe, il est impératif d'analyser l'écosystème dans lequel elle évolue. Le Lycée Collégial Anoual possède une identité propre, forgée par son histoire, son emplacement géographique et le public scolaire qu'il accueille.</p>
+
+        <h3>3.1. Historique et situation géographique</h3>
+        
+        <p>Le <strong>Lycée collégial Anoual</strong> porte le nom hautement symbolique de la bataille d'Anoual, qui s'est déroulée en juillet 1921. Cet événement historique, symbole de résistance et de fierté nationale face aux forces coloniales dans le Rif, insuffle à l'établissement une identité ancrée dans les valeurs de courage, de persévérance et de citoyenneté. Ces valeurs sont d'ailleurs fréquemment rappelées lors des événements culturels organisés par le collège.</p>
+        
+        <p><strong>L'implantation urbaine :</strong> Stratégiquement situé à l'intersection de l'avenue Mohamed V et de l'avenue Annasser, en plein cœur de la ville de Tétouan, l'établissement bénéficie d'une accessibilité optimale. Sa position géographique, à la croisée de différents quartiers (résidentiels, commerçants, et populaires), en fait un véritable carrefour social. Cette situation urbaine centrale présente de nombreux avantages :</p>
+        
+        <ul>
+            <li><strong>Facilité d'accès :</strong> L'établissement est très bien desservi par les transports en commun, ce qui limite le taux d'absentéisme lié aux problèmes de mobilité.</li>
+            <li><strong>Proximité des infrastructures municipales :</strong> Le collège peut facilement collaborer avec les infrastructures sportives ou culturelles de la ville pour des événements inter-établissements.</li>
+            <li><strong>Sécurité :</strong> Situé sur des axes majeurs, les abords de l'établissement sont sécurisés et surveillés, garantissant un climat serein aux heures d'entrée et de sortie des élèves.</li>
+        </ul>
+
+        <div class="quote-block">
+            "La réputation de l'établissement ne repose pas uniquement sur son emplacement, mais sur la discipline qui y règne et la qualité des enseignements dispensés, faisant de lui un choix de premier ordre pour les familles tétouanaises."
+        </div>
+    </div>
+
+    <!-- PAGE 8 : PRESENTATION ETABLISSEMENT 2 -->
+    <div class="page">
+        <h3>3.2. Contexte socio-éducatif des élèves</h3>
+        
+        <p>L'hétérogénéité géographique du bassin de recrutement du Lycée Collégial Anoual se traduit par une grande diversité socio-économique et culturelle parmi les élèves. Cette mixité sociale est une richesse incontestable, car elle fait de l'école un véritable espace d'apprentissage du "vivre-ensemble", conformément aux directives de la charte nationale de l'éducation et de la formation.</p>
+
+        <p>Cependant, cette diversité représente également un défi pédagogique quotidien pour l'équipe enseignante, et tout particulièrement pour le professeur d'Éducation Physique et Sportive. En effet, lors des séances d'EPS, les inégalités socio-culturelles peuvent se manifester de plusieurs manières :</p>
+
+        <div class="content-box">
+            <h4>L'hétérogénéité du "vécu corporel"</h4>
+            <p>On observe un clivage marqué entre les élèves (souvent issus de milieux plus favorisés) qui pratiquent une activité sportive extrascolaire en club (basketball, football, natation, arts martiaux) et ceux dont la seule pratique physique hebdomadaire se résume aux heures d'EPS obligatoires. Cette différence d'expérience motrice crée des écarts de niveau significatifs, nécessitant une forte différenciation pédagogique lors des situations d'apprentissage.</p>
+        </div>
+
+        <div class="content-box">
+            <h4>L'accès à l'équipement sportif</h4>
+            <p>Bien que l'établissement impose une tenue sportive réglementaire, la qualité de l'équipement (notamment les chaussures de sport, cruciales en basket-ball pour éviter les entorses) varie grandement selon le pouvoir d'achat des familles. L'enseignant doit faire preuve de tact et d'équité face à ces disparités matérielles.</p>
+        </div>
+
+        <p>Malgré ces défis, le climat scolaire au Collège Anoual demeure très positif. L'équipe éducative a su instaurer une culture de l'effort et du respect mutuel. Les incidents disciplinaires graves sont rares, et les conflits mineurs entre adolescents sont généralement désamorcés rapidement grâce à la réactivité des surveillants généraux et au dialogue instauré par les enseignants.</p>
+    </div>
+
+    <!-- PAGE 9 : ORGA ADMIN -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">04</span> Organisation Administrative et Pédagogique</h2>
+        
+        <p>Un établissement scolaire est une micro-société dont le bon fonctionnement repose sur une structure hiérarchique claire, où chaque acteur joue un rôle précis pour garantir la réussite des élèves. L'organigramme du Lycée Collégial Anoual est conçu pour optimiser la gestion quotidienne et soutenir l'innovation pédagogique.</p>
+
+        <h3>4.1. L'équipe de direction et la vie scolaire</h3>
+        
+        <p>L'administration est le centre névralgique de l'établissement. J'ai eu l'opportunité d'observer de près ses rouages, ce qui m'a permis de comprendre que l'enseignement n'est que la partie émergée de l'iceberg de la profession éducative.</p>
+
+        <ul>
+            <li><strong>Le Directeur (M. Mohamed Fahim) :</strong> Il est le chef d'établissement, le représentant de l'État et le garant du projet éducatif. Son rôle ne se limite pas à la gestion administrative ; il est le principal animateur pédagogique. Il préside les conseils de classe, gère les relations avec la Direction Provinciale, et s'assure de l'application des réformes ministérielles. J'ai été marqué par son approche managériale basée sur la porte ouverte et l'écoute active des enseignants.</li>
+            
+            <li><strong>La Surveillance Générale (2 surveillants) :</strong> Véritables chevilles ouvrières du collège, les surveillants généraux gèrent la "vie scolaire". Ils contrôlent les flux d'élèves, gèrent les absences et les retards, et sont en première ligne pour traiter les problèmes disciplinaires. Leur rôle est préventif autant que répressif. Le lien entre le professeur d'EPS et la surveillance générale est vital, notamment pour vérifier les certificats médicaux d'inaptitude et gérer les élèves dispensés.</li>
+            
+            <li><strong>Le Service d'Intendance (L'économe) :</strong> Ce service est crucial pour l'EPS. C'est l'économe qui gère le budget alloué à l'achat du matériel sportif (ballons, filets, chasubles) et veille à l'entretien des infrastructures (réparation des panneaux de basket, traçage des lignes). Une bonne relation avec l'intendance garantit des conditions de travail optimales.</li>
+        </ul>
+
+        <p>En parallèle, l'établissement s'appuie sur des <strong>cellules d'écoute</strong> et des <strong>clubs éducatifs</strong> (culturels, environnementaux) qui contribuent à l'épanouissement des élèves en dehors du cadre strictement académique.</p>
+    </div>
+
+    <!-- PAGE 10 : ORGA PEDAGO -->
+    <div class="page">
+        <h3>4.2. Le département d'Éducation Physique et Sportive</h3>
+        
+        <p>Le département d'EPS du Lycée Collégial Anoual est particulièrement dynamique. Composé de quatre professeurs titulaires expérimentés, il fonctionne de manière très coordonnée, ce qui est indispensable compte tenu du partage des installations sportives.</p>
+
+        <div class="content-box">
+            <h4>La coordination disciplinaire</h4>
+            <p>Au début de chaque année scolaire, l'équipe d'EPS se réunit pour élaborer le Projet Pédagogique d'EPS de l'établissement. Ce document est la feuille de route de l'équipe. Il définit :</p>
+            <ul>
+                <li>La programmation annuelle des APSA (répartition des cycles de basket, gym, athlétisme selon les trimestres et la météo).</li>
+                <li>L'utilisation rationnelle des espaces sportifs (qui utilise le terrain de basket 1 pendant que l'autre fait de la course de vitesse).</li>
+                <li>L'harmonisation des critères d'évaluation (pour que tous les élèves de 3ème soient notés avec la même rigueur).</li>
+            </ul>
+        </div>
+
+        <p><strong>L'Association Sportive Scolaire (ASS) :</strong><br>
+        En plus de leurs heures d'enseignement obligatoire, les professeurs d'EPS animent l'Association Sportive de l'établissement, généralement les mercredis ou vendredis après-midi. Cette structure permet aux élèves les plus motivés de s'entraîner spécifiquement (souvent en sports collectifs comme le basket-ball) et de représenter le collège lors des compétitions inter-établissements (championnats scolaires).</p>
+
+        <p>Mon immersion au sein de ce département m'a permis d'assister à des réunions de concertation informelles entre les professeurs. J'y ai appris l'importance de la solidarité professionnelle : échange de fiches de préparation, conseils sur la gestion d'un élève difficile, ou prêt de matériel inter-classes. Cette cohésion d'équipe est un puissant levier contre l'isolement professionnel.</p>
+    </div>
+
+    <!-- PAGE 11 : INSTALLATIONS 1 -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">05</span> Les Installations Sportives</h2>
+        
+        <p>La qualité et la disponibilité des infrastructures sportives sont les premières variables qui conditionnent l'enseignement de l'EPS. Un enseignant ne peut mettre en œuvre une pédagogie efficace et sécuritaire que s'il maîtrise l'environnement physique dans lequel il opère. Le Collège Anoual dispose d'un plateau sportif extérieur relativement vaste, bien que soumis aux aléas climatiques.</p>
+
+        <h3>5.1. Infrastructures spécifiques au Basket-ball</h3>
+        
+        <p>L'enseignement du basket-ball nécessite des espaces délimités et un équipement fixe lourd (les paniers). L'établissement est équipé de manière à pouvoir faire travailler des classes entières (généralement 35 à 40 élèves) dans des conditions acceptables.</p>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 25px;">
+            <tr>
+                <td style="width: 50%; padding: 15px; border: 1px solid var(--border-color); vertical-align: top; background-color: var(--white);">
+                    <h4 style="margin-top: 0; color: var(--accent-color);">Les Terrains</h4>
+                    <p>Le collège dispose de deux terrains de basket-ball extérieurs en asphalte. Le traçage des lignes (lignes de fond, lignes de touche, raquette, ligne des lancers francs, ligne des 3 points) est visible, ce qui est fondamental pour l'apprentissage du règlement spatial. Ces deux terrains permettent d'organiser des tournois intra-classe en demi-terrain (4 ateliers jouant simultanément sur un seul panier).</p>
+                </td>
+                <td style="width: 50%; padding: 15px; border: 1px solid var(--border-color); vertical-align: top; background-color: var(--white);">
+                    <h4 style="margin-top: 0; color: var(--accent-color);">Les Cibles (Paniers)</h4>
+                    <p>Quatre panneaux de basket sont fixés sur des structures métalliques solides. Les arceaux sont à la hauteur réglementaire standard (3m05). Une piste d'amélioration serait l'installation de paniers réglables en hauteur pour faciliter l'apprentissage du tir chez les élèves de 1ère année de collège dont le gabarit physique rend l'accès à la cible de 3m05 parfois frustrant.</p>
+                </td>
+            </tr>
+        </table>
+
+        <div class="quote-block">
+            "L'organisation spatiale est le premier acte pédagogique de l'enseignant d'EPS. Un terrain bien délimité est le garant d'un temps d'engagement moteur optimal et de la sécurité des élèves."
+        </div>
+    </div>
+
+    <!-- PAGE 12 : INSTALLATIONS 2 -->
+    <div class="page">
+        <h3>5.2. Gestion du matériel et normes de sécurité</h3>
+        
+        <p>Au-delà des infrastructures fixes, la pédagogie du basket-ball repose sur la disponibilité du matériel mobile. Le ratio "nombre de ballons par élève" est la clé de la réussite d'un cycle : moins il y a de ballons, plus le temps d'attente est long, et moins l'apprentissage est efficace.</p>
+
+        <div class="content-box">
+            <h4>L'inventaire matériel du département EPS</h4>
+            <ul>
+                <li><strong>Ballons de basket :</strong> L'établissement dispose d'une dotation suffisante permettant d'avoir environ 1 ballon pour 2 élèves. Fait important : le département possède des ballons de Taille 6 (adaptés à la morphologie des filles et des jeunes collégiens) et de Taille 7 (standard masculin), ce qui permet une pédagogie différenciée dès la prise en main de l'engin.</li>
+                <li><strong>Matériel de matérialisation :</strong> Une grande quantité de plots (cônes hauts et coupelles basses) est disponible. Ils sont indispensables pour créer des parcours de dribble, délimiter des zones de "rivières" ou rétrécir les terrains.</li>
+                <li><strong>Chasubles :</strong> Élément fondamental en sport collectif pour la lecture du jeu. Le département possède des jeux de 4 couleurs distinctes, lavés régulièrement.</li>
+            </ul>
+        </div>
+
+        <h4>Sécurité et routines de mise en place</h4>
+        <p>L'espace extérieur nécessite une vérification quotidienne. Avant chaque première heure de cours, l'enseignant ou les élèves responsables (une routine d'autonomie très bénéfique) effectuent une "tournée" du terrain pour s'assurer de l'absence de débris (verre, graviers) sur l'asphalte, prévenant ainsi les blessures en cas de chute ou de glissade. De plus, les vestiaires, situés à proximité immédiate des terrains, sont gérés avec rigueur : fermeture à clé pendant la séance pour éviter les vols, et temps minuté (5 minutes) pour le changement de tenue, afin de ne pas amputer le temps de pratique effective.</p>
+    </div>
+
+    <!-- PAGE 13 : ADMIN STAGE 1 -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">06</span> Stage Éducatif : Fonctionnement Administratif</h2>
+        
+        <p>La formation d'un enseignant ne serait pas complète sans une plongée dans les responsabilités administratives et réglementaires inhérentes à la fonction publique. Mon stage s'est articulé autour de deux axes : une immersion dans la vie scolaire globale, et la pratique pédagogique directe. Concernant le volet administratif, j'ai été pleinement intégré aux tâches de l'établissement.</p>
+
+        <h3>6.1. La surveillance des examens et le cadre réglementaire</h3>
+        
+        <p>Durant ma période de stage, j'ai été mobilisé pour participer à la surveillance des examens normalisés (ou contrôles continus communs). Cette expérience est cruciale car elle permet de se familiariser avec l'autorité institutionnelle de l'enseignant dans un contexte solennel.</p>
+
+        <div class="session-block">
+            <h3>La procédure de surveillance <span>Étape par Étape</span></h3>
+            <p><span class="highlight-text">1. Phase préparatoire (Avant l'épreuve) :</span><br>
+            Accueil des élèves dans la cour, vérification des identités (carnets de correspondance), et placement stratégique dans les salles de classe (généralement en quinconce ou un élève par table) pour empêcher toute communication. Vérification du matériel autorisé sur les tables.</p>
+            
+            <p><span class="highlight-text">2. Lancement de l'épreuve :</span><br>
+            Lecture solennelle du cadre réglementaire : rappel des sanctions encourues en cas de triche (fraude à l'examen), consigne sur l'extinction des téléphones portables. Distribution synchronisée des sujets et écriture de l'heure de début et de fin au tableau.</p>
+            
+            <p><span class="highlight-text">3. Gestion dynamique de la salle :</span><br>
+            Contrairement aux idées reçues, la surveillance nécessite une attention active. J'ai appris à "balayer" la salle du regard, à me déplacer silencieusement sans perturber la concentration des candidats, et à repérer les signes d'anxiété ou les comportements suspects.</p>
+            
+            <p><span class="highlight-text">4. Clôture et traitement :</span><br>
+            Récupération des copies en respectant l'ordre alphabétique de la liste de présence, comptage minutieux avant la sortie du dernier élève, et rédaction du procès-verbal de déroulement de l'épreuve remis à l'administration.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 14 : ADMIN STAGE 2 -->
+    <div class="page">
+        <h3>6.2. Gestion de l'assiduité et relation avec les familles</h3>
+        
+        <p>En tant que stagiaire encadré, j'ai pu observer les procédures de suivi des élèves, en particulier la gestion des absences et inaptitudes, qui revêtent une importance particulière en EPS.</p>
+
+        <div class="content-box">
+            <h4>La gestion des inaptitudes médicales</h4>
+            <p>Contrairement aux autres matières, l'EPS fait face aux "dispenses" médicales. J'ai appris la procédure légale : un élève ne peut s'auto-dispenser. Tout problème de santé doit être justifié par un certificat médical visé par le médecin de la santé scolaire, puis par la direction. Même dispensé de pratique physique, l'élève inactif (dispense partielle) reste sous la responsabilité du professeur d'EPS. Il doit être présent sur le terrain. L'enjeu pédagogique est alors de l'intégrer au cours : je lui confiais des rôles d'observateur (remplir une fiche de statistiques sur les tirs de son équipe) ou d'arbitre de touche, le maintenant ainsi dans le processus d'apprentissage.</p>
+        </div>
+
+        <div class="content-box">
+            <h4>L'appel et le cahier de textes</h4>
+            <p>L'appel au début de l'heure est un acte légal transférant la responsabilité de l'administration vers l'enseignant. Le remplissage rigoureux du cahier de textes (format papier et/ou numérique via la plateforme Massar) est également une obligation stricte. J'ai appris à y consigner précisément les objectifs de la séance, les situations d'apprentissage mises en place et les éventuelles observations sur le déroulement du cours.</p>
+        </div>
+
+        <p><strong>L'importance de la tenue :</strong><br>
+        Une tâche administrative récurrente en EPS est le contrôle de la tenue sportive. L'oubli de la tenue n'est pas seulement un problème disciplinaire, c'est une question d'hygiène et de sécurité. L'approche observée consistait à sanctionner de manière progressive (avertissement verbal, puis rapport écrit) tout en essayant de comprendre les raisons (parfois financières ou familiales) derrière ces oublis répétés, en lien avec l'assistante sociale de l'établissement si nécessaire.</p>
+    </div>
+
+    <!-- PAGE 15 : PRATIQUE 1 - CADRE -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">07</span> L'Expérience Pratique : Cycle Basket-ball</h2>
+        
+        <p>Le cœur de mon stage d'immersion fut la conception, la conduite et l'évaluation d'un cycle complet d'apprentissage en Basket-ball pour des élèves du cycle collégial. Cette mise en situation m'a confronté à la complexité de l'ingénierie didactique.</p>
+
+        <h3>7.1. Le cadre didactique de l'APSA Basket-ball</h3>
+        
+        <p>Le basket-ball est un sport de grand espace, caractérisé par la contrainte de la balle (interdiction de se déplacer en la portant) et par une cible très petite, horizontale et située en hauteur, ce qui rend la marque difficile (crise de temps et d'espace). Les enjeux de formation pour les élèves sont multiples :</p>
+
+        <ul>
+            <li><strong>Enjeu moteur :</strong> Développer la dissociation segmentaire (regarder ailleurs que sur la balle pendant le dribble), la coordination (double pas), et la maîtrise des équilibres.</li>
+            <li><strong>Enjeu cognitif :</strong> Traiter des informations multiples et changeantes pour prendre des décisions rapides (tirer, dribbler ou passer ?).</li>
+            <li><strong>Enjeu socio-affectif :</strong> Maîtriser ses émotions, accepter le contact (dans les limites du règlement), coopérer avec ses partenaires et respecter l'adversaire et l'arbitre.</li>
+        </ul>
+
+        <div class="problem-section" style="padding: 15px; margin-top: 20px;">
+            <h3 style="font-size: 14pt; margin-bottom: 5px;">Le projet de cycle</h3>
+            <p style="margin-bottom: 0;"><strong>Compétence visée :</strong> Dans un match à 4 contre 4 sur grand terrain, les élèves doivent être capables de s'organiser collectivement pour faire progresser le ballon vers la zone de marque (par le dribble ou la passe) et tirer en position favorable, tout en assurant un repli défensif à la perte de la balle.</p>
+        </div>
+
+        <p>La progression du cycle a été pensée de la motricité individuelle (relation joueur-ballon) vers la tactique collective (coopération et opposition). Les pages suivantes détaillent l'ingénierie de chacune des 7 séances clés de ce cycle.</p>
+    </div>
+
+    <!-- PAGE 16 : PRATIQUE 2 - SEANCE 1 -->
+    <div class="page">
+        <h3>7.2. Séance 1 : L'évaluation diagnostique</h3>
+        
+        <p>La première séance d'un cycle est primordiale. Elle ne vise pas l'apprentissage immédiat d'une technique, mais la réalisation d'un "état des lieux" des capacités motrices, affectives et cognitives des élèves. Cette étape conditionne la différenciation pédagogique des séances futures.</p>
+
+        <div class="session-block">
+            <h3>Fiche Technique : Séance 1 <span>Diagnostic</span></h3>
+            
+            <p><span class="highlight-text">Objectif principal :</span> Évaluer le niveau initial des élèves (comportements moteurs, tactiques et sociaux) en situation de match global réduit.</p>
+            
+            <p><span class="highlight-text">Échauffement (10 min) :</span> Mise en train cardiovasculaire simple (course autour du terrain) suivie d'un échauffement articulaire classique. Prise de contact avec le ballon (manipulation libre).</p>
+            
+            <p><span class="highlight-text">Situation de référence (40 min) : Match en 3 contre 3 sur demi-terrain.</span></p>
+            <ul>
+                <li><strong>Dispositif :</strong> 4 équipes par demi-terrain. Pendant que 2 équipes jouent (5 minutes de temps de jeu), 1 équipe arbitre et gère le score, 1 équipe observe.</li>
+                <li><strong>Consignes :</strong> Le jeu démarre par un engagement du milieu. Les règles de base (non-violence, pas de sortie de terrain) sont appliquées. Les fautes techniques (marcher, reprise) sont signalées mais peu sanctionnées dans un premier temps pour laisser le jeu se dérouler.</li>
+                <li><strong>Rôle de l'enseignant :</strong> Retrait de l'action directe. Observation armée à l'aide d'une grille préétablie.</li>
+            </ul>
+            
+            <p><span class="highlight-text">Critères d'observation (Grille) :</span></p>
+            <ul>
+                <li><strong>Statut du porteur de balle :</strong> Dribble-t-il les yeux rivés sur le ballon ? Est-il capable de s'arrêter sans faire de "marcher" ? Essaie-t-il de tirer ou passe-t-il immédiatement le ballon (balle brûlante) ?</li>
+                <li><strong>Statut des non-porteurs :</strong> Sont-ils "grappes" autour du ballon ou s'écartent-ils pour offrir des solutions de passe (démarquage) ?</li>
+                <li><strong>Défense :</strong> La défense est-elle en barrage ou les joueurs courent-ils tous derrière le ballon ?</li>
+            </ul>
+
+            <p><span class="highlight-text">Bilan de la séance :</span> Cette évaluation a révélé une forte grappe (les élèves agglutinés autour de la balle), un dribble quasi-exclusivement visuel (tête baissée) et un fort taux de déchets techniques sur les tirs. La suite du cycle s'est donc logiquement orientée vers l'acquisition de ces fondamentaux.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 17 : PRATIQUE 3 - SEANCE 2 -->
+    <div class="page">
+        <h3>7.3. Séance 2 : Le Dribble et la protection de balle</h3>
+        
+        <p>Suite au constat de la séance diagnostique, la priorité était de permettre à l'élève de maîtriser son déplacement avec le ballon sans le perdre immédiatement, afin de prendre confiance et d'élargir son champ visuel.</p>
+
+        <div class="session-block">
+            <h3>Fiche Technique : Séance 2 <span>Fondamentaux Moteurs</span></h3>
+            
+            <p><span class="highlight-text">Objectif principal :</span> Être capable de se déplacer en dribblant sans regarder la balle, tout en sachant protéger son ballon face à une opposition modérée.</p>
+            
+            <p><span class="highlight-text">Échauffement avec ballon (15 min) :</span> Manipulation (faire tourner le ballon autour de la taille, des genoux). Apprentissage du "stance" (posture de base du basketteur : genoux fléchis, buste droit). Dribble sur place main droite, puis main gauche, en essayant de regarder le professeur qui montre des chiffres avec ses doigts (obligeant la prise d'information visuelle périphérique).</p>
+            
+            <p><span class="highlight-text">Situation d'apprentissage 1 : Le parcours slalome (15 min)</span></p>
+            <ul>
+                <li><strong>Dispositif :</strong> Plusieurs parcours avec plots et cerceaux.</li>
+                <li><strong>Consignes biomécaniques :</strong> Pousser le ballon vers le sol en cassant le poignet, amortir la remontée avec les doigts écartés (ne jamais "taper" la balle avec la paume). Fléchir les jambes pour abaisser le centre de gravité, rendant le dribble plus bas et plus contrôlable.</li>
+            </ul>
+            
+            <p><span class="highlight-text">Situation d'apprentissage 2 : "Le jeu de l'épervier en dribble" (20 min)</span></p>
+            <ul>
+                <li><strong>Dispositif :</strong> Tous les élèves ont un ballon sur la ligne de fond. 2 "éperviers" (défenseurs sans ballon) sont au milieu du terrain.</li>
+                <li><strong>But :</strong> Traverser le terrain en dribblant sans se faire toucher le ballon ou le corps par l'épervier.</li>
+                <li><strong>Variable de protection :</strong> Mettre son corps en opposition. Le ballon doit être dribblé avec la main la plus éloignée du défenseur (dribble de protection), l'autre bras sert de bouclier (sans faire faute).</li>
+            </ul>
+
+            <p><span class="highlight-text">Bilan de la séance :</span> L'introduction d'un aspect ludique a fortement engagé les élèves. La notion de protection de balle a été bien assimilée, bien que le dribble de la main faible (souvent la gauche) reste très perfectible chez la majorité.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 18 : PRATIQUE 4 - SEANCE 3 -->
+    <div class="page">
+        <h3>7.4. Séance 3 : La Passe, la réception et le démarquage</h3>
+        
+        <p>Une fois le dribble abordé, il est impératif de lutter contre l'individualisme (l'élève qui traverse tout le terrain seul). Le basket-ball est un sport de passes. Cette séance vise à construire la relation "Porteur de Balle / Non-Porteur de Balle".</p>
+
+        <div class="session-block">
+            <h3>Fiche Technique : Séance 3 <span>Le Jeu Collectif</span></h3>
+            
+            <p><span class="highlight-text">Objectif principal :</span> Assurer la continuité du jeu par des passes rapides et précises, et comprendre la notion d'appel de balle (se démarquer) pour le receveur.</p>
+            
+            <p><span class="highlight-text">Échauffement et gammes (15 min) :</span> Par deux, face à face. Travail de la mécanique de la passe à deux mains poitrine (pouces vers le bas à la fin du geste, extension complète des bras). Travail de la passe à terre (rebond aux deux tiers de la distance). Consigne stricte sur la réception : aller au-devant du ballon (ne pas l'attendre) avec les mains prêtes en cible.</p>
+            
+            <p><span class="highlight-text">Situation d'apprentissage : La "Passe à 10" évolutive (30 min)</span></p>
+            <ul>
+                <li><strong>Dispositif :</strong> 2 équipes de 4 sur un demi-terrain.</li>
+                <li><strong>Étape 1 :</strong> Réaliser 10 passes consécutives. <em>Contrainte absolue : Dribble interdit.</em> Si la balle tombe ou est interceptée, elle passe à l'autre équipe.</li>
+                <li><strong>Étape 2 (Variable didactique) :</strong> Ajout de "Zones de refuge" (cerceaux au sol). Un joueur dans un cerceau ne peut pas être défendu pendant 3 secondes. Cela oblige les joueurs à se déplacer (se démarquer) vers les espaces libres.</li>
+                <li><strong>Consignes tactiques :</strong> Pour le porteur : utiliser les feintes de passe pour bouger la défense (Pivoter). Pour les non-porteurs : ne pas rester caché derrière le défenseur, faire des appels francs (changement de rythme "lent-VITE").</li>
+            </ul>
+
+            <p><span class="highlight-text">Bilan de la séance :</span> L'interdiction du dribble a créé une crise initiale (les porteurs de balle paniquaient). L'arrêt sur image imposé par l'enseignant pour questionner la classe ("Pourquoi n'avez-vous pas de solution de passe ?") a permis la verbalisation du concept de démarquage. La deuxième phase fut nettement plus fluide.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 19 : PRATIQUE 5 - SEANCE 4 -->
+    <div class="page">
+        <h3>7.5. Séance 4 : Le Tir en course (Double pas)</h3>
+        
+        <p>Le tir en course est l'arme fatale de la contre-attaque en basket-ball. C'est l'un des gestes techniques les plus complexes à enseigner au collège car il requiert une coordination parfaite des membres supérieurs et inférieurs tout en conservant sa vitesse.</p>
+
+        <div class="session-block">
+            <h3>Fiche Technique : Séance 4 <span>Biomécanique Spécifique</span></h3>
+            
+            <p><span class="highlight-text">Objectif principal :</span> Coordonner la fin d'un dribble avec l'exécution de deux appuis rythmés ("Droite-Gauche" ou "Gauche-Droite") pour déposer le ballon près du cercle.</p>
+            
+            <p><span class="highlight-text">Échauffement neuromusculaire (15 min) :</span> Insistance sur le travail d'appuis (échelles de rythme, cloche-pieds, sauts verticaux à partir d'un appui). Exercices de lancer du ballon contre la planche depuis une position arrêtée sous le panier (viser le coin supérieur du petit carré).</p>
+            
+            <p><span class="highlight-text">Situation d'apprentissage : L'atelier analytique fractionné (35 min)</span></p>
+            <ul>
+                <li><strong>Étape 1 (Sans ballon) :</strong> Apprentissage de la rythmique "TA - TAAM". Arrivée en course lente, pose du 1er appui long (généralement extérieur), pose du 2ème appui court (intérieur) servant de ressort, impulsion et saut avec élévation du genou libre ("le fil de la marionnette" qui relie le genou au coude tireur).</li>
+                <li><strong>Étape 2 (Balle tenue) :</strong> Matérialisation des appuis avec 2 cerceaux au sol (un rouge, un bleu). Les élèves arrivent avec le ballon dans les mains, font "1, 2, Tir".</li>
+                <li><strong>Étape 3 (Avec Dribble) :</strong> L'élève arrive en dribblant. La difficulté est le moment de la saisie (l'arrêt du dribble). Consigne : attraper fermement le ballon à deux mains au moment précis où le premier pied touche le sol dans le cerceau.</li>
+            </ul>
+
+            <p><span class="highlight-text">Bilan de la séance :</span> Beaucoup d'erreurs récurrentes de "marcher" (prise de 3 ou 4 appuis). La décomposition de l'exercice avec les cerceaux sonores (l'enseignant tape dans ses mains au rythme "1... 2.. SAUTE") a aidé les élèves kinesthésiques et auditifs à intégrer le bon tempo.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 20 : PRATIQUE 6 - SEANCE 5 -->
+    <div class="page">
+        <h3>7.6. Séance 5 : Le Tir en appui et ses fondamentaux</h3>
+        
+        <p>Le tir extérieur (à mi-distance) nécessite force, équilibre et précision. Contrairement au tir en course, c'est un tir de positionnement. Au collège, le manque de force physique pousse souvent les élèves à tirer "à deux mains depuis le torse", un geste qu'il faut corriger pour amener le tir à une main au-dessus de la tête.</p>
+
+        <div class="session-block">
+            <h3>Fiche Technique : Séance 5 <span>Précision et Mécanique</span></h3>
+            
+            <p><span class="highlight-text">Objectif principal :</span> Acquérir et stabiliser la biomécanique du tir en appui classique en utilisant la méthode anglo-saxonne "BEEF" (Balance, Eyes, Elbow, Follow-through).</p>
+            
+            <p><span class="highlight-text">Échauffement et corps de séance intégrés (40 min) :</span></p>
+            <ul>
+                <li><strong>1. Balance (Équilibre) :</strong> Les appuis doivent être écartés à la largeur des épaules, le pied du côté de la main tireuse légèrement avancé. Le poids du corps est réparti.</li>
+                <li><strong>2. Eyes (Cible) :</strong> Regard fixe focalisé sur un point de l'arceau (généralement la partie arrière de l'anneau ou le carré de la planche).</li>
+                <li><strong>3. Elbow (Coude) :</strong> C'est la correction la plus difficile. Le coude tireur doit former un angle droit (90°) et être aligné verticalement avec le genou et le pied tireur. L'avant-bras est sous le ballon ("le plateau du serveur"). La main faible ne sert qu'à maintenir la balle sur le côté, elle ne pousse pas le ballon au moment du tir.</li>
+                <li><strong>4. Follow-through (Fouetté) :</strong> Extension totale des jambes (la force vient du bas) suivie de l'extension du bras. Rupture finale du poignet qui fouette le ballon, donnant une rotation arrière (backspin) qui adoucit le rebond sur l'arceau. La main finit "dans le panier" (le col de cygne).</li>
+            </ul>
+            
+            <p><span class="highlight-text">Situation ludique : Concours "Autour du Monde" :</span></p>
+            <p>5 plots placés en demi-cercle autour de la raquette. Les élèves tirent à tour de rôle. Pour passer au plot suivant, il faut marquer. Ce format maintient un très haut niveau d'engagement cognitif et émotionnel.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 21 : PRATIQUE 7 - SEANCE 6 -->
+    <div class="page">
+        <h3>7.7. Séance 6 : Initiation tactique et défense</h3>
+        
+        <p>Après avoir outillé les élèves techniquement (dribble, passe, tirs), cette avant-dernière séance les replace dans un contexte d'opposition totale pour préparer l'évaluation finale. L'accent est mis sur la structuration de l'espace défensif et offensif.</p>
+
+        <div class="session-block">
+            <h3>Fiche Technique : Séance 6 <span>Tactique Collective</span></h3>
+            
+            <p><span class="highlight-text">Objectif principal :</span> Comprendre le principe de base de la défense individuelle (Homme à Homme) et structurer l'attaque en écartant le jeu.</p>
+            
+            <p><span class="highlight-text">Situation d'apprentissage : Le Match à thèmes (4 contre 4)</span></p>
+            <ul>
+                <li><strong>Thème Défensif - L'attribution :</strong> Avant chaque remise en jeu, chaque défenseur doit annoncer à voix haute le numéro ou le nom de l'attaquant qu'il "prend" au marquage. Règle absolue du placement défensif : se situer toujours "entre son joueur et le panier" avec une vision sur la balle (triangle défensif).</li>
+                <li><strong>Thème Offensif - L'occupation spatiale :</strong> Interdiction absolue de se retrouver à plus de deux joueurs attaquants dans la raquette simultanément. Les joueurs doivent se répartir sur la ligne des 3 points pour "écarter" la défense et créer des espaces libres au centre pour des "cuts" (coupes vers le panier) ou des doubles pas.</li>
+                <li><strong>Le rôle du Joker (Variable de facilitation) :</strong> Pour les équipes en grande difficulté offensive, un joueur supplémentaire "Joker" (avec une chasuble de couleur différente) attaque toujours avec l'équipe qui a le ballon, créant une supériorité numérique permanente (5 contre 4).</li>
+            </ul>
+
+            <p><span class="highlight-text">Bilan de la séance :</span> Le passage d'un jeu égocentré (courir tous vers le ballon) à un jeu structuré spatialement est difficile pour des collégiens. L'arrêt fréquent du jeu par des "Freeze" (statues) a été indispensable. Le professeur siffle, tout le monde s'arrête, et on analyse collectivement les placements aberrants. L'intelligence tactique de certains élèves a commencé à véritablement s'exprimer lors de cette séance.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 22 : PRATIQUE 8 - SEANCE 7 -->
+    <div class="page">
+        <h3>7.8. Séance 7 : L'évaluation sommative</h3>
+        
+        <p>L'évaluation clôture le processus d'enseignement-apprentissage. En EPS, l'évaluation doit être formative (tout au long du cycle) mais se termine par un bilan sommatif chiffré. Elle se déroule dans des conditions de match stabilisées.</p>
+
+        <div class="session-block">
+            <h3>Fiche Technique : Séance 7 <span>Bilan des Compétences</span></h3>
+            
+            <p><span class="highlight-text">Dispositif d'évaluation :</span></p>
+            <p>Tournoi sous forme de poules. Matchs de 6 à 8 minutes en 4 contre 4 sur grand terrain. L'évaluation repose sur un système de co-évaluation (les élèves évaluent leurs pairs) supervisé et pondéré par l'enseignant.</p>
+            
+            <p><span class="highlight-text">La grille d'évaluation s'articule autour de 3 domaines :</span></p>
+            
+            <ol>
+                <li><strong>Efficacité (La performance - 6 points) :</strong>
+                    <ul>
+                        <li>Gain du match / Résultat du tournoi (2 pts).</li>
+                        <li>Ratio tirs réussis / tirs tentés (L'élève trouve-t-il des positions de tirs favorables ?) (4 pts).</li>
+                    </ul>
+                </li>
+                <li><strong>Maîtrise d'Exécution (La technique et tactique - 10 points) :</strong>
+                    <ul>
+                        <li>Utilisation pertinente du dribble (progression, protection) vs dribble inutile (3 pts).</li>
+                        <li>Qualité des choix de passes (vers l'avant, sans perte de balle) et démarquage (4 pts).</li>
+                        <li>Comportement défensif (Garde-t-il son joueur ? Fait-il l'effort du repli défensif à la perte de balle ?) (3 pts).</li>
+                    </ul>
+                </li>
+                <li><strong>Savoir-Être et Investissement (Le social - 4 points) :</strong>
+                    <ul>
+                        <li>Respect des règles, de l'adversaire et des décisions de l'arbitre.</li>
+                        <li>Sérieux et implication dans les rôles sociaux (Arbitrage, tenue de la feuille de marque, chronométrage).</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <p><span class="highlight-text">Rôle de l'enseignant :</span> Pendant cette séance, j'étais muni de ma tablette d'observation, en position de recul (sur le côté du terrain, à hauteur de la ligne médiane pour une vision globale). Mon rôle n'était plus d'intervenir ou de conseiller, mais de certifier l'acquisition des compétences de chaque élève de manière objective et bienveillante.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 23 : METHODOLOGIE 1 -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">08</span> Méthodologie et Analyse des Résultats</h2>
+        
+        <p>Afin de mener à bien ce stage et d'appréhender de manière rigoureuse les dynamiques d'enseignement et d'apprentissage en éducation physique, ma démarche réflexive s'est appuyée sur une méthodologie scientifique de recueil de données, couplant observations quantitatives et qualitatives.</p>
+
+        <h3>8.1. Méthodes d'observation et de recueil de données</h3>
+
+        <div class="content-box">
+            <h4>L'observation armée (Outils quantitatifs)</h4>
+            <p>Durant mes phases d'observation des classes encadrées par mon tuteur, j'ai utilisé des grilles critériées spécifiquement conçues pour quantifier :</p>
+            <ul>
+                <li><strong>Le Temps d'Engagement Moteur (TEM) :</strong> Calcul du temps chronométré pendant lequel l'élève est réellement en activité physique, par rapport au temps de gestion (appel, matériel) et au temps d'explication. L'objectif d'un bon cours est de maximiser ce TEM.</li>
+                <li><strong>La densité des interactions :</strong> Fréquence et type des "feedbacks" (retours d'information) émis par l'enseignant (feedbacks correctifs, prescriptifs, ou d'encouragement).</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h4>L'approche qualitative et compréhensive</h4>
+            <p>Parallèlement aux grilles, la dimension humaine de l'enseignement nécessite une analyse qualitative :</p>
+            <ul>
+                <li><strong>Entretiens semi-directifs :</strong> Des échanges réguliers en fin de séance avec mon enseignant tuteur m'ont offert l'opportunité d'explorer ses processus de prise de décision : *Pourquoi avez-vous interrompu cet exercice ? Pourquoi avoir modifié la taille du terrain à ce moment précis ?* Ces entretiens ont mis en lumière "l'épistémologie pratique" du professeur.</li>
+                <li><strong>Le journal de bord :</strong> Tenu quotidiennement, il m'a permis de consigner mes ressentis, mes erreurs lors de mes propres animations, les réactions inattendues des élèves, constituant ainsi une base solide pour l'auto-analyse.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PAGE 24 : METHODOLOGIE 2 -->
+    <div class="page">
+        <h3>8.2. Évolution motrice et sociale des élèves</h3>
+        
+        <p>L'analyse croisée des données recueillies au début (séance diagnostique) et à la fin du cycle (évaluation sommative) permet de tirer des conclusions significatives sur les apprentissages réalisés par les collégiens du Lycée Anoual.</p>
+
+        <h4>Les progrès moteurs et tactiques constatés</h4>
+        <p>Globalement, l'évolution de la motricité spécifique au basket-ball a été très satisfaisante. Les résultats quantitatifs de l'évaluation finale montrent que :</p>
+        <ul>
+            <li>La fréquence de l'infraction de "marcher" a chuté de près de 60%. Les élèves ont globalement intégré la règle de l'arrêt simultané ou alternatif.</li>
+            <li>Le "syndrome de la grappe" (tous les joueurs sur le ballon) a laissé place à un début d'occupation rationnelle de l'espace. Les élèves ont compris la nécessité d'écarter le jeu pour créer des couloirs de pénétration.</li>
+            <li>Le taux de réussite du tir en course (double pas) a considérablement augmenté, particulièrement chez les élèves ayant des difficultés de coordination initiale, validant ainsi la pertinence des ateliers analytiques fractionnés mis en place à la Séance 4.</li>
+        </ul>
+
+        <h4>L'évolution des compétences psychosociales</h4>
+        <p>Un des succès majeurs de ce cycle réside dans le développement du savoir-être. L'instauration de l'arbitrage par les pairs (co-évaluation) a d'abord généré des contestations, mais a fini par responsabiliser les élèves. Ceux qui étaient effacés sur le plan moteur se sont souvent révélés être d'excellents arbitres, gagnant ainsi en autorité et en respectabilité au sein du groupe classe.</p>
+
+        <div class="quote-block">
+            "Cependant, si les progrès moyens de la classe sont indéniables, l'analyse des résultats met en lumière une fracture persistante entre les élèves experts et un groupe d'élèves (souvent féminin) en situation d'appréhension face au ballon et au contact, ce qui constitue le cœur de ma problématique professionnelle."
+        </div>
+    </div>
+
+    <!-- PAGE 25 : PROBLEMATIQUE 1 -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">09</span> Problématique et Solutions Didactiques</h2>
+
+        <div class="problem-section">
+            <h3 style="font-size: 16pt;">La Problématique Identifiée</h3>
+            <p style="font-size: 12pt; font-weight: 600;">Comment garantir l'inclusion et l'engagement moteur de tous les élèves face à l'appréhension du contact physique et à la forte hétérogénéité des niveaux dans les sports collectifs de démarquage (Le cas du Basket-ball au collège) ?</p>
+        </div>
+
+        <h3>9.1. L'hétérogénéité et l'appréhension du contact</h3>
+        
+        <p>Lors de ce cycle de basket-ball, une problématique structurelle inhérente à l'enseignement de l'EPS en milieu scolaire ordinaire s'est manifestée avec force : le clivage profond entre les élèves "experts" (ou débrouillards) et les élèves "débutants".</p>
+
+        <p>Dans un sport de grand espace et de contact (même réglementé) comme le basket-ball, l'hétérogénéité ne se traduit pas seulement par une différence de compétence technique (savoir faire un double pas), mais surtout par un rapport émotionnel totalement différent à l'action. On observe très souvent chez les débutants le phénomène dit de la "fuite de la balle" ou du "joueur transparent".</p>
+
+        <p>Ce comportement d'évitement est motivé par plusieurs facteurs psychologiques et physiques :</p>
+        <ul>
+            <li><strong>La peur du projectile :</strong> Le ballon de basket, de taille 7, lourd et dur, représente une menace physique pour un élève qui ne maîtrise pas la technique de réception, craignant la blessure aux doigts ou au visage.</li>
+            <li><strong>L'appréhension du contact :</strong> L'irruption soudaine d'un adversaire rapide dans l'espace proche génère une panique (crise de temps). L'élève se débarrasse alors du ballon (passe à l'aveugle ou "balle brûlante") pour éviter le contact corporel.</li>
+            <li><strong>Le poids du regard des autres :</strong> Au collège, le statut social est exacerbé. Rater un tir, perdre la balle ou faire une erreur visible devant ses pairs, particulièrement devant les élèves experts qui peuvent se montrer moqueurs ou frustrés, engendre une inhibition motrice sévère.</li>
+        </ul>
+    </div>
+
+    <!-- PAGE 26 : PROBLEMATIQUE 2 -->
+    <div class="page">
+        <h3>9.2. L'impact du genre et des stéréotypes</h3>
+        
+        <p>Il est scientifiquement et sociologiquement prouvé que les sports collectifs avec ballon, particulièrement ceux nécessitant un engagement physique intense comme le basket-ball ou le football, sont marqués par des stéréotypes de genre. Mes observations au Collège Anoual n'ont pas fait exception à cette règle socio-culturelle.</p>
+
+        <div class="content-box">
+            <h4>La monopolisation de l'espace par les garçons "experts"</h4>
+            <p>Dans les situations de match global, un phénomène de monopolisation de l'objet (le ballon) et de l'espace (le centre du terrain) par une élite de joueurs (majoritairement des garçons pratiquant en club ou dans la rue) s'installe très vite. Ces joueurs organisent le jeu entre eux ("boy's club"), s'ignorant mutuellement les joueurs considérés comme moins rentables pour la victoire de l'équipe (filles ou garçons débutants), les reléguant à la périphérie du terrain, dans des rôles passifs.</p>
+        </div>
+
+        <p>La conséquence directe de cette dynamique est catastrophique du point de vue de l'équité pédagogique : l'élève expert accumule des dizaines de touches de balle et de tirs (renforçant ses compétences), tandis que l'élève débutant termine la séance en n'ayant touché le ballon qu'une ou deux fois, sans aucune occasion d'apprentissage ou de réussite. Son Temps d'Engagement Moteur (TEM) réel est proche de zéro, ce qui va à l'encontre même de la mission de l'école publique inclusive.</p>
+
+        <p>Laisser "le jeu être le jeu" sous prétexte de respect des règles fédérales du basket-ball ne fait que reproduire et amplifier les inégalités sociales et motrices. L'enseignant doit donc intervenir didactiquement pour modifier le milieu et forcer la coopération. C'est tout l'enjeu de la transposition didactique et de l'ingénierie pédagogique proposées dans la page suivante.</p>
+    </div>
+
+    <!-- PAGE 27 : PROBLEMATIQUE 3 -->
+    <div class="page">
+        <h3>9.3. Solutions pédagogiques : Variables et différenciation</h3>
+        
+        <p>Pour répondre à cette problématique complexe, j'ai mis en œuvre et testé (avec l'aide de mon tuteur) plusieurs stratégies de différenciation et d'aménagement des règles, visant à sécuriser les élèves appréhensifs tout en maintenant la motivation des experts.</p>
+
+        <div class="session-block" style="border-left: 5px solid var(--primary-color);">
+            <h3 style="border-bottom: none; margin-bottom: 5px;">Solution 1 : L'aménagement du règlement (La règle protectrice)</h3>
+            <p>Pour lutter contre la panique liée au contact, j'ai instauré la règle de <strong>la "bulle de protection" (ou règle du mètre)</strong>. Le défenseur n'a pas le droit d'arracher le ballon des mains du porteur ni de s'approcher à moins d'un bras de distance. Le porteur de balle dispose d'un espace vital sécurisé pour lever la tête, observer le jeu et prendre une décision tactique (dribbler ou passer) sans urgence agressive. Pour forcer l'inclusion, la <strong>"règle de la passe à tous"</strong> a été expérimentée : un tir n'est validé que si tous les membres de l'équipe (y compris les plus faibles) ont touché le ballon lors de la phase offensive.</p>
+        </div>
+
+        <div class="session-block" style="border-left: 5px solid var(--secondary-color);">
+            <h3 style="border-bottom: none; margin-bottom: 5px;">Solution 2 : Situations à Supériorité Numérique</h3>
+            <p>Avant d'affronter le stress du match à égalité numérique (4c4), la confiance motrice se construit dans des situations facilitantes. Le travail en <strong>"Supériorité numérique écrasante" (3 contre 1, ou 4 contre 2)</strong> permet aux attaquants de toujours trouver une solution de passe facile. Le défenseur est souvent placé en situation de "défense passive" (les bras dans le dos, il sert uniquement d'obstacle visuel) pour permettre aux débutants de répéter le geste technique (tir, double pas) avec la pression d'un adversaire, mais sans le risque d'échec de l'interception.</p>
+        </div>
+
+        <div class="session-block" style="border-left: 5px solid var(--accent-color);">
+            <h3 style="border-bottom: none; margin-bottom: 5px;">Solution 3 : Contrats de rôles et "Statuts" asymétriques</h3>
+            <p>Plutôt que de punir l'élève expert pour son individualisme, il s'agit d'utiliser ses compétences au service des autres. Dans les matchs hétérogènes, le joueur le plus fort reçoit le statut exclusif de <strong>"Meneur / Distributeur"</strong> : il lui est formellement interdit de tirer ou de marquer lui-même, mais ses "passes décisives" (une passe qui entraîne un panier d'un coéquipier) valent double pour son équipe. Le joueur expert doit donc se transformer en coach sur le terrain, forcé de chercher, d'encourager et de faire briller les élèves débutants. Parallèlement, les paniers marqués par les filles ou les débutants comptent triple, rééquilibrant ainsi l'enjeu stratégique pour l'équipe entière.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 28 : CONCLUSION -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">10</span> Conclusion Générale</h2>
+        
+        <p>Ce stage d'immersion préprofessionnelle au sein du Lycée Collégial Anoual a constitué une étape charnière, fondatrice et profondément transformatrice dans mon cursus universitaire à l'École Normale Supérieure. Il a représenté la passerelle indispensable entre la théorie didactique enseignée sur les bancs de la faculté et la réalité complexe, bouillonnante et exigeante du terrain scolaire marocain.</p>
+
+        <p>Cette confrontation directe avec la pratique a confirmé de manière indéniable ma vocation pour le noble métier d'enseignant d'Éducation Physique et Sportive. Le cycle de basket-ball, par la richesse de ses exigences motrices, la complexité de ses enjeux tactiques et l'intensité des émotions sociales qu'il suscite chez les adolescents, s'est révélé être un formidable laboratoire d'apprentissage, tant pour les élèves que pour moi-même.</p>
+
+        <p>À travers les réussites observées, mais aussi et surtout à travers les échecs et les difficultés rencontrées (la gestion de la peur du ballon, l'inclusion des élèves les plus fragiles, la gestion du bruit en extérieur), j'ai pris la pleine mesure de la responsabilité qui incombe à l'éducateur sportif. J'ai compris que l'acte d'enseigner ne se réduit en aucun cas à la simple transmission d'une technique sportive (un tir, un dribble). Enseigner l'EPS, c'est concevoir des environnements d'apprentissage sécurisants, c'est manipuler habilement des variables didactiques (le règlement, l'espace, le temps) pour rendre l'inaccessible atteignable, et c'est lutter activement contre les déterminismes sociaux pour permettre à chaque élève, indépendamment de son niveau de départ, de vivre des expériences de réussite motrice valorisantes.</p>
+
+        <p>L'observation méticuleuse des méthodes de mon tuteur, le professeur Harfouf, ainsi que mes propres expérimentations didactiques, m'ont permis de forger les tout premiers outils de mon identité professionnelle. Je ressors de cette expérience avec des certitudes renforcées quant à la nécessité impérieuse de l'EPS dans la formation globale, physique et citoyenne de l'élève. Je suis habité(e) par une détermination renouvelée à poursuivre ma formation intellectuelle et pédagogique, afin de devenir, demain, un enseignant réflexif, inclusif, et capable de s'adapter avec créativité aux défis multiples de l'école marocaine du 21ème siècle.</p>
+    </div>
+
+    <!-- PAGE 29 : BIBLIOGRAPHIE -->
+    <div class="page">
+        <h2 class="section-title"><span class="section-number">11</span> Bibliographie & Webographie</h2>
+        
+        <p>La rédaction de ce rapport et la conception de l'ingénierie didactique du cycle de basket-ball se sont appuyées sur les ressources théoriques, institutionnelles et pratiques suivantes :</p>
+        
+        <h3 style="font-size: 13pt; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">Textes Officiels et Institutionnels</h3>
+        <ul>
+            <li><strong>Ministère de l'Éducation Nationale, du Préscolaire et des Sports (Royaume du Maroc)</strong> : <em>Les Orientations Pédagogiques Générales (OPG) relatives à l'enseignement de l'Éducation Physique et Sportive au cycle collégial</em>, Direction des Curricula.</li>
+            <li><strong>Conseil Supérieur de l'Éducation, de la Formation et de la Recherche Scientifique</strong> : <em>Vision Stratégique de la Réforme 2015-2030 (Pour une école de l'équité, de la qualité et de la promotion)</em>.</li>
+        </ul>
+
+        <h3 style="font-size: 13pt; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">Documents Pédagogiques Locaux</h3>
+        <ul>
+            <li>Projet Pédagogique d'EPS du Lycée Collégial Anoual (Année scolaire 2025-2026).</li>
+            <li>Progressions annuelles, fiches de préparation de séances et grilles d'évaluation diagnostique, formative et sommative transmis par le <strong>Professeur Harfouf Soulaiman</strong>.</li>
+            <li>Ressources et fiches didactiques internes fournies par l'équipe pédagogique d'EPS de l'établissement.</li>
+        </ul>
+
+        <h3 style="font-size: 13pt; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">Ouvrages de référence en Didactique et EPS</h3>
+        <ul>
+            <li><strong>BOSC, G. (1998)</strong> : <em>Enseigner le Basket-ball</em>, Éditions Vigot. (Pour la transposition des fondamentaux techniques en milieu scolaire).</li>
+            <li><strong>MÉARD, J. & BERTONE, S. (1998)</strong> : <em>L'autonomie de l'élève et l'intégration des règles en éducation physique</em>, Presses Universitaires de France (PUF). (Utilisé pour l'analyse de la problématique de l'appréhension et du règlement).</li>
+            <li><strong>SENERS, P. (1999)</strong> : <em>La leçon d'EPS</em>, Éditions Vigot.</li>
+            <li><strong>UBAUD, M. (2004)</strong> : <em>Les sports collectifs au collège et au lycée</em>, Éditions Revue EPS.</li>
+        </ul>
+
+        <h3 style="font-size: 13pt; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">Webographie</h3>
+        <ul>
+            <li><strong>Revue EP&S (Éducation Physique et Sport)</strong> : Articles consultés en ligne concernant la pédagogie différenciée et l'hétérogénéité dans les sports de démarquage.</li>
+            <li><strong>Fédération Royale Marocaine de Basket-ball (FRMBB)</strong> : Consultation du règlement officiel du Mini-Basket et des approches d'initiation (règles adaptées pour les jeunes pratiquants).</li>
+        </ul>
+    </div>
+
+    <script>
+        function openPrintableVersion() {
+            const btn = document.querySelector('.print-button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Préparation...';
+            
+            // Récupère le code HTML complet de la page
+            let htmlContent = document.documentElement.outerHTML;
+            
+            // Retire le bouton d'impression pour qu'il n'apparaisse pas sur le PDF final
+            htmlContent = htmlContent.replace(/<button class="print-button".*?<\/button>/, '');
+            
+            // Ajoute un script qui lance l'impression automatiquement dès l'ouverture
+            const autoPrintScript = `
+                <script>
+                    window.onload = function() {
+                        setTimeout(function() {
+                            window.print();
+                        }, 500);
+                    };
+                <\/script>
+            `;
+            htmlContent = htmlContent.replace('</body>', autoPrintScript + '</body>');
+
+            // Crée un fichier virtuel (Blob) avec le contenu
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+
+            // Ouvre le fichier dans un nouvel onglet
+            const link = document.createElement('a');
+            link.href = url;
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Remet le bouton à son état normal après l'action
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                URL.revokeObjectURL(url);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
